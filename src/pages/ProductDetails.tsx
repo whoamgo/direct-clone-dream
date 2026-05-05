@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { Heart, Star, ShieldCheck, Truck, RotateCcw, Minus, Plus } from "lucide-react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { Heart, Star, ShieldCheck, Truck, RotateCcw, Minus, Plus, Eye, RefreshCcw, Home, ChevronRight } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,31 +14,55 @@ const ProductDetails = () => {
   const product = slug ? bySlug(slug) : undefined;
   const { add, toggleWish, wishlist } = useCart();
   const [qty, setQty] = useState(1);
+  const [activeImg, setActiveImg] = useState(0);
+  const nav = useNavigate();
 
   if (!product) {
     return <Layout><div className="container-page py-20 text-center"><h1 className="text-2xl font-bold">Product not found</h1><Link to="/shop" className="text-primary mt-4 inline-block">Back to shop</Link></div></Layout>;
   }
   const off = product.mrp > product.price ? Math.round(((product.mrp - product.price) / product.mrp) * 100) : 0;
   const wished = wishlist.includes(product.id);
+  // mock multi-image gallery using same emoji on tinted backgrounds
+  const tints = [product.bg, "#F5F5F7", "#FFF4E0", "#E8F8E8"];
+  const images = tints.map((bg, i) => ({ bg, label: i }));
+  const buyNow = () => { add(product, qty); nav("/checkout"); };
 
   return (
     <Layout>
       <div className="container-page py-6">
-        <nav className="text-xs text-muted-foreground mb-4">
-          <Link to="/" className="hover:text-primary">Home</Link> / <Link to={`/category/${product.category}`} className="hover:text-primary">{product.category}</Link> / <span className="text-foreground">{product.name}</span>
+        <nav className="flex items-center gap-1 text-xs text-muted-foreground mb-4 flex-wrap">
+          <Link to="/" className="hover:text-primary"><Home className="w-3.5 h-3.5" /></Link>
+          <ChevronRight className="w-3 h-3" />
+          <Link to={`/category/${product.category}`} className="hover:text-primary capitalize">{product.category.replace(/-/g, " ")}</Link>
+          <ChevronRight className="w-3 h-3" />
+          <span className="text-foreground line-clamp-1">{product.name}</span>
         </nav>
         <div className="grid md:grid-cols-2 gap-8">
-          <div className="rounded-xl overflow-hidden border border-border" style={{ background: product.bg }}>
-            <div className="aspect-square flex items-center justify-center text-[12rem]">{product.emoji}</div>
+          <div className="space-y-3">
+            <div className="rounded-xl overflow-hidden border border-border" style={{ background: images[activeImg].bg }}>
+              <div className="aspect-square flex items-center justify-center text-[10rem] sm:text-[12rem]">{product.emoji}</div>
+            </div>
+            <div className="flex gap-2 sm:gap-3">
+              {images.map((im, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveImg(i)}
+                  className={`w-16 h-16 sm:w-20 sm:h-20 rounded-md border-2 overflow-hidden flex items-center justify-center text-3xl shrink-0 ${activeImg === i ? "border-primary" : "border-border hover:border-foreground/30"}`}
+                  style={{ background: im.bg }}
+                  aria-label={`View image ${i + 1}`}
+                >
+                  {product.emoji}
+                </button>
+              ))}
+            </div>
           </div>
           <div className="space-y-4">
-            <p className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{product.brand}</p>
             <h1 className="text-2xl sm:text-3xl font-extrabold">{product.name}</h1>
             <div className="flex items-center gap-2 text-sm">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star key={i} className={`w-4 h-4 ${i < Math.round(product.rating) ? "fill-rating text-rating" : "text-muted"}`} />
               ))}
-              <span className="text-muted-foreground">{product.rating.toFixed(1)} • {product.reviews} reviews</span>
+              <span className="text-muted-foreground">{product.reviews} reviews</span>
             </div>
             <div className="flex items-baseline gap-3 pt-2">
               <span className="text-3xl font-extrabold text-price">₹{product.price.toFixed(2)}</span>
@@ -49,19 +73,46 @@ const ProductDetails = () => {
                 </>
               )}
             </div>
-            <p className="text-sm text-accent font-semibold">In Stock • Inclusive of all taxes</p>
-            <p className="text-sm text-muted-foreground leading-relaxed">{product.desc}</p>
+            <p className="text-xs text-muted-foreground">Ex Tax: ₹{product.price.toFixed(2)}</p>
 
-            <div className="flex items-center gap-3 pt-2">
-              <div className="flex items-center border border-border rounded-md">
+            <table className="text-sm w-full max-w-md">
+              <tbody className="[&_td]:py-1 [&_td:first-child]:text-muted-foreground [&_td:first-child]:pr-4 [&_td:first-child]:w-32">
+                <tr><td>Brand:</td><td className="font-medium">{product.brand}</td></tr>
+                <tr><td>Product Code:</td><td className="font-medium">{product.id.toUpperCase()}</td></tr>
+                <tr><td>Availability:</td><td className="font-medium text-accent">✓ In Stock</td></tr>
+                <tr><td>Viewed:</td><td className="font-medium flex items-center gap-1"><Eye className="w-3.5 h-3.5" /> {100 + product.reviews * 4} times</td></tr>
+              </tbody>
+            </table>
+
+            <div className="pt-2">
+              <p className="text-sm font-semibold mb-2">Qty</p>
+              <div className="flex items-center border border-border rounded-md w-fit">
                 <button className="p-2 hover:bg-muted" onClick={() => setQty((q) => Math.max(1, q - 1))}><Minus className="w-4 h-4" /></button>
-                <span className="px-4 font-semibold">{qty}</span>
+                <input type="number" value={qty} onChange={(e) => setQty(Math.max(1, +e.target.value || 1))} className="w-12 text-center bg-transparent outline-none font-semibold" />
                 <button className="p-2 hover:bg-muted" onClick={() => setQty((q) => q + 1)}><Plus className="w-4 h-4" /></button>
               </div>
-              <Button size="lg" className="flex-1" onClick={() => { add(product, qty); toast.success(`${qty} × ${product.name} added`); }}>Add to Cart</Button>
-              <Button size="lg" variant="outline" onClick={() => { toggleWish(product.id); toast.success(wished ? "Removed" : "Wishlisted"); }}>
-                <Heart className={`w-5 h-5 ${wished ? "fill-primary text-primary" : ""}`} />
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <Button size="lg" variant="outline" className="border-primary/40 bg-primary/10 text-primary hover:bg-primary/20" onClick={() => { add(product, qty); toast.success(`${qty} × ${product.name} added`); }}>
+                Add to Cart
               </Button>
+              <Button size="lg" onClick={buyNow}>Buy Now</Button>
+            </div>
+
+            <div className="flex items-center gap-5 pt-3 text-sm">
+              <button onClick={() => { toggleWish(product.id); toast.success(wished ? "Removed" : "Wishlisted"); }} className="flex items-center gap-2 hover:text-primary">
+                <span className="w-7 h-7 rounded-full bg-primary/15 flex items-center justify-center">
+                  <Heart className={`w-4 h-4 text-primary ${wished ? "fill-primary" : ""}`} />
+                </span>
+                <span className="font-semibold uppercase tracking-wide text-xs">Add to Wishlist</span>
+              </button>
+              <button className="flex items-center gap-2 hover:text-primary">
+                <span className="w-7 h-7 rounded-full bg-primary/15 flex items-center justify-center">
+                  <RefreshCcw className="w-4 h-4 text-primary" />
+                </span>
+                <span className="font-semibold uppercase tracking-wide text-xs">Add to Compare</span>
+              </button>
             </div>
 
             <div className="grid grid-cols-3 gap-3 pt-4">
