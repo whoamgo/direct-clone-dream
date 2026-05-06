@@ -25,6 +25,7 @@ const Shop = () => {
   const [minP, setMinP] = useState<number>(Math.floor(priceMin));
   const [maxP, setMaxP] = useState<number>(Math.ceil(priceMax));
   const [grid, setGrid] = useState<2 | 3 | 4>(4);
+  const [view, setView] = useState<"grid" | "list">("grid");
   const [sort, setSort] = useState("default");
   const [perPage, setPerPage] = useState(15);
 
@@ -41,7 +42,9 @@ const Shop = () => {
 
   const reset = () => { setBrandFilter([]); setMinP(Math.floor(priceMin)); setMaxP(Math.ceil(priceMax)); };
 
-  const gridCls = grid === 2
+  const gridCls = view === "list"
+    ? "flex flex-col gap-3"
+    : grid === 2
     ? "grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4"
     : grid === 3
     ? "grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4"
@@ -117,10 +120,10 @@ const Shop = () => {
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-muted-foreground">Grid View:</span>
                 {[2, 3, 4].map((n) => (
-                  <button key={n} onClick={() => setGrid(n as 2|3|4)} className={`w-8 h-8 rounded border text-sm font-semibold ${grid === n ? "bg-primary text-primary-foreground border-primary" : "border-border hover:bg-muted"}`}>{n}</button>
+                  <button key={n} onClick={() => { setGrid(n as 2|3|4); setView("grid"); }} className={`w-8 h-8 rounded border text-sm font-semibold ${view === "grid" && grid === n ? "bg-primary text-primary-foreground border-primary" : "border-border hover:bg-muted"}`}>{n}</button>
                 ))}
-                <button className="w-8 h-8 rounded border border-border hover:bg-muted flex items-center justify-center"><ListIcon className="w-4 h-4" /></button>
-                <button className="w-8 h-8 rounded border border-border hover:bg-muted flex items-center justify-center"><LayoutGrid className="w-4 h-4" /></button>
+                <button onClick={() => setView("list")} aria-label="List view" title="List view" className={`w-8 h-8 rounded border flex items-center justify-center ${view === "list" ? "bg-primary text-primary-foreground border-primary" : "border-border hover:bg-muted"}`}><ListIcon className="w-4 h-4" /></button>
+                <button onClick={() => { setView("grid"); setGrid(4); }} aria-label="Grid view" title="Grid view" className={`w-8 h-8 rounded border flex items-center justify-center ${view === "grid" ? "bg-primary text-primary-foreground border-primary" : "border-border hover:bg-muted"}`}><LayoutGrid className="w-4 h-4" /></button>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <label className="flex items-center gap-1.5">

@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Search, Heart, ShoppingCart, User, Phone, FileText, Menu, X, Sun, Moon, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { useTheme } from "@/context/ThemeProvider";
 import { useCart } from "@/context/CartContext";
-import { categories } from "@/data/products";
+import { categories, products } from "@/data/products";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
@@ -24,12 +24,81 @@ export const Header = () => {
   const { count } = useCart();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [openSug, setOpenSug] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const mobWrapRef = useRef<HTMLDivElement>(null);
   const nav = useNavigate();
 
   const submitSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    setOpenSug(false);
     nav(`/shop${search ? `?q=${encodeURIComponent(search)}` : ""}`);
   };
+
+  const suggestions = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return { products: [], categories: [], brands: [] };
+    const prod = products.filter((p) => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q)).slice(0, 6);
+    const cats = categories.filter((c) => c.name.toLowerCase().includes(q)).slice(0, 4);
+    const brands = Array.from(new Set(products.map((p) => p.brand))).filter((b) => b.toLowerCase().includes(q)).slice(0, 4);
+    return { products: prod, categories: cats, brands };
+  }, [search]);
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (!wrapRef.current?.contains(e.target as Node) && !mobWrapRef.current?.contains(e.target as Node)) {
+        setOpenSug(false);
+      }
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, []);
+
+  const goTo = (url: string) => { setOpenSug(false); setSearch(""); nav(url); };
+
+  const SuggestPanel = () => (
+    suggestions.products.length === 0 && suggestions.categories.length === 0 && suggestions.brands.length === 0 ? (
+      <div className="absolute top-full left-0 right-0 mt-1 bg-popover border border-border rounded-md shadow-lg z-50 p-4 text-sm text-muted-foreground">
+        No results for "{search}"
+      </div>
+    ) : (
+      <div className="absolute top-full left-0 right-0 mt-1 bg-popover border border-border rounded-md shadow-lg z-50 max-h-[70vh] overflow-auto">
+        {suggestions.categories.length > 0 && (
+          <div className="p-2">
+            <p className="text-[10px] font-bold text-muted-foreground uppercase px-2 py-1">Categories</p>
+            {suggestions.categories.map((c) => (
+              <button key={c.slug} onClick={() => goTo(`/category/${c.slug}`)} className="w-full text-left flex items-center gap-2 px-2 py-1.5 rounded hover:bg-muted text-sm">
+                <span>{c.icon}</span> {c.name}
+              </button>
+            ))}
+          </div>
+        )}
+        {suggestions.brands.length > 0 && (
+          <div className="p-2 border-t border-border">
+            <p className="text-[10px] font-bold text-muted-foreground uppercase px-2 py-1">Brands</p>
+            {suggestions.brands.map((b) => (
+              <button key={b} onClick={() => goTo(`/shop?q=${encodeURIComponent(b)}`)} className="w-full text-left px-2 py-1.5 rounded hover:bg-muted text-sm">{b}</button>
+            ))}
+          </div>
+        )}
+        {suggestions.products.length > 0 && (
+          <div className="p-2 border-t border-border">
+            <p className="text-[10px] font-bold text-muted-foreground uppercase px-2 py-1">Products</p>
+            {suggestions.products.map((p) => (
+              <button key={p.id} onClick={() => goTo(`/product/${p.slug}`)} className="w-full text-left flex items-center gap-3 px-2 py-2 rounded hover:bg-muted">
+                <div className="w-10 h-10 rounded flex items-center justify-center text-xl shrink-0" style={{ background: p.bg }}>{p.emoji}</div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium truncate">{p.name}</p>
+                  <p className="text-xs text-muted-foreground">{p.brand} · ₹{p.price}</p>
+                </div>
+              </button>
+            ))}
+            <button onClick={submitSearch as any} className="w-full text-center text-sm text-primary font-semibold py-2 hover:bg-muted rounded">View all results →</button>
+          </div>
+        )}
+      </div>
+    )
+  );
 
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-border">
@@ -55,16 +124,21 @@ export const Header = () => {
           </div>
         </Link>
 
-        <form onSubmit={submitSearch} className="hidden md:flex flex-1 max-w-2xl">
-          <input
-            value={search} onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search for medicines, products and more..."
-            className="flex-1 h-10 px-4 border border-border rounded-l-md bg-background text-sm outline-none focus:border-primary"
-          />
-          <Button type="submit" className="rounded-l-none h-10">
-            <Search className="w-4 h-4 mr-1" /> Search
-          </Button>
-        </form>
+        <div ref={wrapRef} className="hidden md:block flex-1 max-w-2xl relative">
+          <form onSubmit={submitSearch} className="flex">
+            <input
+              value={search}
+              onChange={(e) => { setSearch(e.target.value); setOpenSug(true); }}
+              onFocus={() => setOpenSug(true)}
+              placeholder="Search for medicines, products and more..."
+              className="flex-1 h-10 px-4 border border-border rounded-l-md bg-background text-sm outline-none focus:border-primary"
+            />
+            <Button type="submit" className="rounded-l-none h-10">
+              <Search className="w-4 h-4 mr-1" /> Search
+            </Button>
+          </form>
+          {openSug && search.trim() && <SuggestPanel />}
+        </div>
 
         <Link to="/shop" className="hidden lg:flex items-center gap-2 h-10 px-4 border border-secondary text-secondary rounded-md hover:bg-secondary hover:text-secondary-foreground transition font-semibold text-sm">
           <FileText className="w-4 h-4" /> PRESCRIPTION
@@ -90,14 +164,19 @@ export const Header = () => {
       </div>
 
       {/* Mobile search */}
-      <form onSubmit={submitSearch} className="md:hidden container-page pb-3 flex">
-        <input
-          value={search} onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search products..."
-          className="flex-1 h-10 px-3 border border-border rounded-l-md bg-background text-sm outline-none focus:border-primary"
-        />
-        <Button type="submit" className="rounded-l-none h-10"><Search className="w-4 h-4" /></Button>
-      </form>
+      <div ref={mobWrapRef} className="md:hidden container-page pb-3 relative">
+        <form onSubmit={submitSearch} className="flex">
+          <input
+            value={search}
+            onChange={(e) => { setSearch(e.target.value); setOpenSug(true); }}
+            onFocus={() => setOpenSug(true)}
+            placeholder="Search products..."
+            className="flex-1 h-10 px-3 border border-border rounded-l-md bg-background text-sm outline-none focus:border-primary"
+          />
+          <Button type="submit" className="rounded-l-none h-10"><Search className="w-4 h-4" /></Button>
+        </form>
+        {openSug && search.trim() && <SuggestPanel />}
+      </div>
 
       {/* Categories nav */}
       <div className="border-t border-border bg-background">
