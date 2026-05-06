@@ -17,18 +17,18 @@ export type Product = {
 };
 
 export const categories = [
-  { slug: "ayurveda", name: "Ayurveda", icon: "🌿" },
-  { slug: "homeopathy", name: "Homeopathy", icon: "💊" },
-  { slug: "vitamins-and-nutrition", name: "Vitamins & Nutrition", icon: "🍊" },
-  { slug: "nutritional-drinks", name: "Nutritional Drinks", icon: "🥛" },
-  { slug: "fitness-supplements", name: "Fitness Supplements", icon: "💪" },
-  { slug: "sexual-wellness", name: "Sexual Wellness", icon: "💗" },
-  { slug: "stomach-pain-care", name: "Stomach & Pain Care", icon: "🩺" },
-  { slug: "skin-care", name: "Skin Care", icon: "🧴" },
-  { slug: "hair-care", name: "Hair Care", icon: "💆" },
-  { slug: "oral-care", name: "Oral Care", icon: "🪥" },
-  { slug: "sanitizers-handwash", name: "Sanitizers & Hand Wash", icon: "🧼" },
-  { slug: "baby-care", name: "Baby Care", icon: "👶" },
+  { slug: "ayurveda", name: "Ayurveda", icon: "🌿", color: "#16a34a" },
+  { slug: "homeopathy", name: "Homeopathy", icon: "💊", color: "#2563eb" },
+  { slug: "vitamins-and-nutrition", name: "Vitamins & Nutrition", icon: "🍊", color: "#f97316" },
+  { slug: "nutritional-drinks", name: "Nutritional Drinks", icon: "🥛", color: "#0ea5e9" },
+  { slug: "fitness-supplements", name: "Fitness Supplements", icon: "💪", color: "#dc2626" },
+  { slug: "sexual-wellness", name: "Sexual Wellness", icon: "💗", color: "#ec4899" },
+  { slug: "stomach-pain-care", name: "Stomach & Pain Care", icon: "🩺", color: "#0891b2" },
+  { slug: "skin-care", name: "Skin Care", icon: "🧴", color: "#a855f7" },
+  { slug: "hair-care", name: "Hair Care", icon: "💆", color: "#d97706" },
+  { slug: "oral-care", name: "Oral Care", icon: "🪥", color: "#0284c7" },
+  { slug: "sanitizers-handwash", name: "Sanitizers & Hand Wash", icon: "🧼", color: "#14b8a6" },
+  { slug: "baby-care", name: "Baby Care", icon: "👶", color: "#f59e0b" },
 ];
 
 const palette = ["#FFE5E5", "#E5F4FF", "#E8F8E8", "#FFF4E0", "#F0E8FF", "#FFF0F5", "#E0F7FA", "#FFFAE0"];
