@@ -18,6 +18,9 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Account from "./pages/Account";
 import FAQ from "./pages/FAQ";
+import Brands from "./pages/Brands";
+import Blog from "./pages/Blog";
+import BlogDetails from "./pages/BlogDetails";
 import { Privacy, Terms, Returns, Shipping } from "./pages/Legal";
 import NotFound from "./pages/NotFound";
 
@@ -46,6 +49,9 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/faq" element={<FAQ />} />
+              <Route path="/brands" element={<Brands />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogDetails />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/returns" element={<Returns />} />

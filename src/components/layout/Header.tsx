@@ -13,9 +13,10 @@ const navLinks = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About Us" },
   { to: "/contact", label: "Contact Us" },
+  { to: "/brands", label: "Brands" },
+  { to: "/blog", label: "Health Resources" },
   { to: "/faq", label: "FAQ" },
   { to: "/privacy", label: "Policy & Services" },
-  { to: "/shop", label: "Health Resources" },
 ];
 
 export const Header = () => {
