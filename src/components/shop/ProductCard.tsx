@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, Star, Minus, Plus, ImageIcon } from "lucide-react";
 import { Product } from "@/data/products";
@@ -13,6 +13,12 @@ export const ProductCard = ({ product }: { product: Product }) => {
   // Lightweight image-load skeleton: the visual is an emoji on a tinted bg,
   // so we simulate the swap from skeleton -> content on first mount.
   const [imgLoaded, setImgLoaded] = useState(false);
+  // Simulate the image load: a short delay shows the skeleton on first paint
+  // and avoids the harsh emoji pop on slow connections.
+  useEffect(() => {
+    const t = setTimeout(() => setImgLoaded(true), 250);
+    return () => clearTimeout(t);
+  }, []);
   // Track the cart line for this product so the card can render a qty stepper
   // once the item has been added.
   const cartLine = items.find((i) => i.product.id === product.id);
@@ -26,14 +32,6 @@ export const ProductCard = ({ product }: { product: Product }) => {
                 <ImageIcon className="w-8 h-8 text-muted-foreground/40" />
               </div>
             )}
-            <img
-              src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'/>"
-              alt=""
-              aria-hidden
-              className="hidden"
-              onLoad={() => setImgLoaded(true)}
-              onError={() => setImgLoaded(true)}
-            />
             <span className={`drop-shadow-sm transition-all duration-300 ${imgLoaded ? "opacity-100 group-hover:scale-110" : "opacity-0"}`}>{product.emoji}</span>
           </div>
         </Link>
