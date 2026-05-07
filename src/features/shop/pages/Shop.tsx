@@ -2,8 +2,8 @@ import { useMemo, useState } from "react";
 import { useSearchParams, useParams, Link } from "react-router-dom";
 import { Home, ChevronRight, ChevronDown, LayoutGrid, List as ListIcon } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
-import { ProductCard } from "@/components/shop/ProductCard";
-import { products, categories } from "@/data/products";
+import { ProductCard } from "@/features/shop/components/ProductCard";
+import { products, categories } from "@/features/shop/data/products";
 import { Button } from "@/components/ui/button";
 
 const Shop = () => {

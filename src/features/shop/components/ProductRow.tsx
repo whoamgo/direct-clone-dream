@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Product } from "@/data/products";
+import { Product } from "@/features/shop/data/products";
 import { ProductCard } from "./ProductCard";
 import { Link } from "react-router-dom";
 

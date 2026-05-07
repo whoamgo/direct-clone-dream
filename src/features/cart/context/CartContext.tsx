@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { Product } from "@/data/products";
+import { Product } from "@/features/shop/data/products";
 
 export type CartItem = { product: Product; qty: number };
 type Ctx = {

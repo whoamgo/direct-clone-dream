@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, Star, Minus, Plus, ImageIcon } from "lucide-react";
-import { Product } from "@/data/products";
-import { useCart } from "@/context/CartContext";
+import { Product } from "@/features/shop/data/products";
+import { useCart } from "@/features/cart/context/CartContext";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 

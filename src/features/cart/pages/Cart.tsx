@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Trash2, Minus, Plus } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { useCart } from "@/context/CartContext";
+import { useCart } from "@/features/cart/context/CartContext";
 
 const Cart = () => {
   const { items, setQty, remove, total, clear } = useCart();
