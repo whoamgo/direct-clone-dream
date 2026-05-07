@@ -16,19 +16,81 @@ export type Product = {
   isSale?: boolean;
 };
 
-export const categories = [
-  { slug: "ayurveda", name: "Ayurveda", icon: "🌿", color: "#16a34a" },
-  { slug: "homeopathy", name: "Homeopathy", icon: "💊", color: "#2563eb" },
-  { slug: "vitamins-and-nutrition", name: "Vitamins & Nutrition", icon: "🍊", color: "#f97316" },
-  { slug: "nutritional-drinks", name: "Nutritional Drinks", icon: "🥛", color: "#0ea5e9" },
-  { slug: "fitness-supplements", name: "Fitness Supplements", icon: "💪", color: "#dc2626" },
-  { slug: "sexual-wellness", name: "Sexual Wellness", icon: "💗", color: "#ec4899" },
-  { slug: "stomach-pain-care", name: "Stomach & Pain Care", icon: "🩺", color: "#0891b2" },
-  { slug: "skin-care", name: "Skin Care", icon: "🧴", color: "#a855f7" },
-  { slug: "hair-care", name: "Hair Care", icon: "💆", color: "#d97706" },
-  { slug: "oral-care", name: "Oral Care", icon: "🪥", color: "#0284c7" },
-  { slug: "sanitizers-handwash", name: "Sanitizers & Hand Wash", icon: "🧼", color: "#14b8a6" },
-  { slug: "baby-care", name: "Baby Care", icon: "👶", color: "#f59e0b" },
+/**
+ * Top-level categories shown in the header mega-menu, category strip,
+ * and footer. Each category may declare an optional `subs` list
+ * (sub-categories) that the header dropdown will surface on hover.
+ */
+export type Category = {
+  slug: string;
+  name: string;
+  icon: string;
+  color: string;
+  subs?: { slug: string; name: string }[];
+};
+
+export const categories: Category[] = [
+  { slug: "ayurveda", name: "Ayurveda", icon: "🌿", color: "#16a34a", subs: [
+    { slug: "ayurvedic-juices", name: "Ayurvedic Juices" },
+    { slug: "ayurvedic-tablets", name: "Ayurvedic Tablets" },
+    { slug: "ayurvedic-oils", name: "Ayurvedic Oils" },
+    { slug: "churna-powders", name: "Churna & Powders" },
+  ]},
+  { slug: "homeopathy", name: "Homeopathy", icon: "💊", color: "#2563eb", subs: [
+    { slug: "homeo-drops", name: "Homeo Drops" },
+    { slug: "homeo-tablets", name: "Homeo Tablets" },
+    { slug: "homeo-ointments", name: "Ointments & Gels" },
+  ]},
+  { slug: "vitamins-and-nutrition", name: "Vitamins & Nutrition", icon: "🍊", color: "#f97316", subs: [
+    { slug: "multivitamins", name: "Multivitamins" },
+    { slug: "vitamin-c", name: "Vitamin C" },
+    { slug: "vitamin-d", name: "Vitamin D" },
+    { slug: "iron-zinc", name: "Iron & Zinc" },
+  ]},
+  { slug: "nutritional-drinks", name: "Nutritional Drinks", icon: "🥛", color: "#0ea5e9", subs: [
+    { slug: "protein-shakes", name: "Protein Shakes" },
+    { slug: "health-drinks", name: "Health Drinks" },
+    { slug: "apple-cider", name: "Apple Cider Vinegar" },
+  ]},
+  { slug: "fitness-supplements", name: "Fitness Supplements", icon: "💪", color: "#dc2626", subs: [
+    { slug: "whey-protein", name: "Whey Protein" },
+    { slug: "bcaa", name: "BCAA" },
+    { slug: "weight-management", name: "Weight Management" },
+  ]},
+  { slug: "sexual-wellness", name: "Sexual Wellness", icon: "💗", color: "#ec4899", subs: [
+    { slug: "condoms", name: "Condoms" },
+    { slug: "lubricants", name: "Lubricants" },
+    { slug: "performance", name: "Performance" },
+  ]},
+  { slug: "stomach-pain-care", name: "Stomach & Pain Care", icon: "🩺", color: "#0891b2", subs: [
+    { slug: "acidity", name: "Acidity & Gas" },
+    { slug: "pain-relief", name: "Pain Relief" },
+    { slug: "constipation", name: "Constipation" },
+  ]},
+  { slug: "skin-care", name: "Skin Care", icon: "🧴", color: "#a855f7", subs: [
+    { slug: "face-serum", name: "Face Serums" },
+    { slug: "moisturizer", name: "Moisturizers" },
+    { slug: "soaps", name: "Medicated Soaps" },
+  ]},
+  { slug: "hair-care", name: "Hair Care", icon: "💆", color: "#d97706", subs: [
+    { slug: "shampoo", name: "Shampoo" },
+    { slug: "hair-oil", name: "Hair Oil" },
+    { slug: "hair-serum", name: "Hair Serum" },
+  ]},
+  { slug: "oral-care", name: "Oral Care", icon: "🪥", color: "#0284c7", subs: [
+    { slug: "toothpaste", name: "Toothpaste" },
+    { slug: "mouthwash", name: "Mouthwash" },
+    { slug: "floss", name: "Dental Floss" },
+  ]},
+  { slug: "sanitizers-handwash", name: "Sanitizers & Hand Wash", icon: "🧼", color: "#14b8a6", subs: [
+    { slug: "hand-wash", name: "Hand Wash" },
+    { slug: "sanitizers", name: "Sanitizers" },
+  ]},
+  { slug: "baby-care", name: "Baby Care", icon: "👶", color: "#f59e0b", subs: [
+    { slug: "baby-lotion", name: "Baby Lotion" },
+    { slug: "baby-soap", name: "Baby Soap" },
+    { slug: "baby-diapers", name: "Diapers" },
+  ]},
 ];
 
 const palette = ["#FFE5E5", "#E5F4FF", "#E8F8E8", "#FFF4E0", "#F0E8FF", "#FFF0F5", "#E0F7FA", "#FFFAE0"];

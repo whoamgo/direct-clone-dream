@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Heart, Star, ShieldCheck, Truck, RotateCcw, Minus, Plus, Eye, RefreshCcw, Home, ChevronRight } from "lucide-react";
+import { Heart, Star, ShieldCheck, Truck, RotateCcw, Minus, Plus, Eye, RefreshCcw, Home, ChevronRight, ImageIcon } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,6 +15,13 @@ const ProductDetails = () => {
   const { add, toggleWish, wishlist } = useCart();
   const [qty, setQty] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
+  // Per-image load state so switching thumbnails shows a brief skeleton.
+  const [imgLoaded, setImgLoaded] = useState(false);
+  useEffect(() => {
+    setImgLoaded(false);
+    const t = setTimeout(() => setImgLoaded(true), 350);
+    return () => clearTimeout(t);
+  }, [activeImg, slug]);
   const nav = useNavigate();
 
   if (!product) {
@@ -39,8 +46,15 @@ const ProductDetails = () => {
         </nav>
         <div className="grid md:grid-cols-2 gap-8">
           <div className="space-y-3">
-            <div className="rounded-xl overflow-hidden border border-border" style={{ background: images[activeImg].bg }}>
-              <div className="aspect-square flex items-center justify-center text-[10rem] sm:text-[12rem]">{product.emoji}</div>
+            <div className="relative rounded-xl overflow-hidden border border-border" style={{ background: images[activeImg].bg }}>
+              <div className="aspect-square flex items-center justify-center text-[10rem] sm:text-[12rem]">
+                {!imgLoaded && (
+                  <div className="absolute inset-0 animate-pulse bg-muted/60 flex items-center justify-center">
+                    <ImageIcon className="w-12 h-12 text-muted-foreground/40" />
+                  </div>
+                )}
+                <span className={`transition-opacity duration-300 ${imgLoaded ? "opacity-100" : "opacity-0"}`}>{product.emoji}</span>
+              </div>
             </div>
             <div className="flex gap-2 sm:gap-3">
               {images.map((im, i) => (
