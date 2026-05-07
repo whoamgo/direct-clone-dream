@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Search, Heart, ShoppingCart, User, Phone, FileText, Menu, X, Sun, Moon, ChevronDown } from "lucide-react";
+import { Search, Heart, ShoppingCart, User, Phone, FileText, Menu, X, Sun, Moon, ChevronDown, ChevronRight } from "lucide-react";
 import { useState, useMemo, useRef, useEffect } from "react";
 import { useTheme } from "@/context/ThemeProvider";
 import { useCart } from "@/context/CartContext";
@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronRight } from "lucide-react";
   // Currently hovered top-level category in the "All Categories" mega-menu.
   // Drives the second-column subcategory panel.
   const [hoverCat, setHoverCat] = useState<string | null>(null);
