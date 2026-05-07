@@ -16,7 +16,6 @@ export type Product = {
   isSale?: boolean;
 };
 
-export const categories = [
 /**
  * Top-level categories shown in the header mega-menu, category strip,
  * and footer. Each category may declare an optional `subs` list
