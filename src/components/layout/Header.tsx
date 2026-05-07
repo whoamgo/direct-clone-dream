@@ -8,9 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-  // Currently hovered top-level category in the "All Categories" mega-menu.
-  // Drives the second-column subcategory panel.
-  const [hoverCat, setHoverCat] = useState<string | null>(null);
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -25,6 +22,7 @@ const navLinks = [
 export const Header = () => {
   const { theme, toggle } = useTheme();
   const { count } = useCart();
+  const [hoverCat, setHoverCat] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [openSug, setOpenSug] = useState(false);
