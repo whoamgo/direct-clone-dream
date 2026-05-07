@@ -1,8 +1,8 @@
 import { Layout } from "@/components/layout/Layout";
-import { AccountSidebar } from "@/components/layout/AccountSidebar";
-import { ProductCard } from "@/components/shop/ProductCard";
-import { useCart } from "@/context/CartContext";
-import { products } from "@/data/products";
+import { AccountSidebar } from "@/features/account/components/AccountSidebar";
+import { ProductCard } from "@/features/shop/components/ProductCard";
+import { useCart } from "@/features/cart/context/CartContext";
+import { products } from "@/features/shop/data/products";
 import { Link } from "react-router-dom";
 import { Home, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";

@@ -4,9 +4,9 @@ import { Heart, Star, ShieldCheck, Truck, RotateCcw, Minus, Plus, Eye, RefreshCc
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { bySlug, byCategory } from "@/data/products";
-import { useCart } from "@/context/CartContext";
-import { ProductRow } from "@/components/shop/ProductRow";
+import { bySlug, byCategory } from "@/features/shop/data/products";
+import { useCart } from "@/features/cart/context/CartContext";
+import { ProductRow } from "@/features/shop/components/ProductRow";
 import { toast } from "sonner";
 
 const ProductDetails = () => {

@@ -6,7 +6,7 @@ import {
   Stethoscope, SprayCan, Scissors, Brush, Hand, Baby,
   type LucideIcon,
 } from "lucide-react";
-import { categories } from "@/data/products";
+import { categories } from "@/features/shop/data/products";
 
 const iconMap: Record<string, LucideIcon> = {
   ayurveda: Leaf,

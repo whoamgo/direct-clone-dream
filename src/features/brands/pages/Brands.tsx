@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { brands, groupBrands, indexLetters } from "@/data/brands";
+import { brands, groupBrands, indexLetters } from "@/features/brands/data/brands";
 
 const Brands = () => {
   const [q, setQ] = useState("");

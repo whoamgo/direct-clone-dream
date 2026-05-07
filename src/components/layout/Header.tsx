@@ -2,8 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Search, Heart, ShoppingCart, User, Phone, FileText, Menu, X, Sun, Moon, ChevronDown, ChevronRight } from "lucide-react";
 import { useState, useMemo, useRef, useEffect } from "react";
 import { useTheme } from "@/context/ThemeProvider";
-import { useCart } from "@/context/CartContext";
-import { categories, products } from "@/data/products";
+import { useCart } from "@/features/cart/context/CartContext";
+import { categories, products } from "@/features/shop/data/products";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,

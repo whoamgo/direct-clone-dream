@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { bySlug, blogs } from "@/data/blogs";
+import { bySlug, blogs } from "@/features/blog/data/blogs";
 import { Calendar, User } from "lucide-react";
 
 const renderLine = (line: string, i: number) => {

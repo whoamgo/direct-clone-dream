@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Input } from "@/components/ui/input";
 import { Search, User, ChevronRight } from "lucide-react";
-import { blogs } from "@/data/blogs";
+import { blogs } from "@/features/blog/data/blogs";
 
 const PAGE_SIZE = 8;
 

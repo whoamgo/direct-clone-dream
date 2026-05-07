@@ -1,5 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
-import { AccountSidebar } from "@/components/layout/AccountSidebar";
+import { AccountSidebar } from "@/features/account/components/AccountSidebar";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Home, ChevronRight, LogOut } from "lucide-react";

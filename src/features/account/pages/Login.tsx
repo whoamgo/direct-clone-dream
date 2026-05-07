@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CheckCircle2, Home, ChevronRight } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
-import { AccountSidebar } from "@/components/layout/AccountSidebar";
+import { AccountSidebar } from "@/features/account/components/AccountSidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";

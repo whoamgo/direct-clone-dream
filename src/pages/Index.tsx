@@ -1,9 +1,9 @@
 import { Layout } from "@/components/layout/Layout";
-import { HeroBanner } from "@/components/shop/HeroBanner";
-import { CategoryStrip } from "@/components/shop/CategoryStrip";
-import { PromoStrip } from "@/components/shop/PromoStrip";
-import { ProductRow } from "@/components/shop/ProductRow";
-import { byCategory, bestSellers, newAdditions } from "@/data/products";
+import { HeroBanner } from "@/features/shop/components/HeroBanner";
+import { CategoryStrip } from "@/features/shop/components/CategoryStrip";
+import { PromoStrip } from "@/features/shop/components/PromoStrip";
+import { ProductRow } from "@/features/shop/components/ProductRow";
+import { byCategory, bestSellers, newAdditions } from "@/features/shop/data/products";
 
 const Index = () => (
   <Layout>
