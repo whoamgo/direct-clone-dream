@@ -6,8 +6,12 @@ import { useCart } from "@/context/CartContext";
 import { categories, products } from "@/data/products";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
+  DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ChevronRight } from "lucide-react";
+  // Currently hovered top-level category in the "All Categories" mega-menu.
+  // Drives the second-column subcategory panel.
+  const [hoverCat, setHoverCat] = useState<string | null>(null);
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -187,14 +191,56 @@ export const Header = () => {
                 <Menu className="w-4 h-4" /> All Categories <ChevronDown className="w-3 h-3" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-64">
-              {categories.map((c) => (
-                <DropdownMenuItem key={c.slug} asChild>
-                  <Link to={`/category/${c.slug}`} className="flex items-center gap-2">
-                    <span>{c.icon}</span> {c.name}
-                  </Link>
-                </DropdownMenuItem>
-              ))}
+            <DropdownMenuContent className="p-0 w-[520px] max-w-[90vw]" align="start">
+              <div className="grid grid-cols-[220px_1fr] min-h-[320px]">
+                {/* Left column: top-level categories */}
+                <ul className="border-r border-border py-2 bg-muted/30">
+                  {categories.map((c) => (
+                    <li
+                      key={c.slug}
+                      onMouseEnter={() => setHoverCat(c.slug)}
+                      className={`group ${hoverCat === c.slug ? "bg-background" : ""}`}
+                    >
+                      <Link
+                        to={`/category/${c.slug}`}
+                        className="flex items-center justify-between gap-2 px-3 py-2 text-sm hover:text-primary"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span>{c.icon}</span> {c.name}
+                        </span>
+                        {c.subs && <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" />}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                {/* Right column: subcategories of the hovered category */}
+                <div className="p-3">
+                  {(() => {
+                    const active = categories.find((c) => c.slug === (hoverCat ?? categories[0].slug));
+                    if (!active) return null;
+                    return (
+                      <>
+                        <p className="text-xs uppercase tracking-wide text-muted-foreground mb-2">{active.name}</p>
+                        <ul className="grid grid-cols-2 gap-y-1 gap-x-3">
+                          {(active.subs ?? []).map((s) => (
+                            <li key={s.slug}>
+                              <Link
+                                to={`/category/${active.slug}?sub=${s.slug}`}
+                                className="block text-sm py-1.5 text-foreground/80 hover:text-primary"
+                              >
+                                {s.name}
+                              </Link>
+                            </li>
+                          ))}
+                          {!active.subs?.length && (
+                            <li className="text-sm text-muted-foreground">Browse all {active.name}</li>
+                          )}
+                        </ul>
+                      </>
+                    );
+                  })()}
+                </div>
+              </div>
             </DropdownMenuContent>
           </DropdownMenu>
           <nav className="hidden lg:flex items-center gap-1 ml-4">
