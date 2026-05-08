@@ -167,6 +167,18 @@ const ProductDetails = () => {
         </Tabs>
       </div>
       <ProductRow title="Related Products" products={byCategory(product.category).filter((p) => p.id !== product.id).slice(0, 10)} />
+
+      {/* Mobile sticky Add-to-Cart / Buy Now bar */}
+      <div className="lg:hidden fixed bottom-14 inset-x-0 z-30 bg-background/95 backdrop-blur border-t border-border px-3 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] flex items-center gap-2 shadow-[0_-4px_16px_-8px_hsl(220_15%_15%/0.15)]">
+        <div className="flex-shrink-0">
+          <p className="text-[10px] text-muted-foreground leading-none">Total</p>
+          <p className="text-base font-extrabold text-price leading-tight">₹{(product.price * qty).toFixed(2)}</p>
+        </div>
+        <Button variant="outline" className="flex-1 border-primary text-primary hover:bg-primary/10" onClick={() => { add(product, qty); toast.success(`${qty} × ${product.name} added`); }}>
+          Add to Cart
+        </Button>
+        <Button className="flex-1" onClick={buyNow}>Buy Now</Button>
+      </div>
     </Layout>
   );
 };
