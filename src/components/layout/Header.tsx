@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { PrescriptionUploadModal } from "@/features/prescription";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -26,6 +27,7 @@ export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [openSug, setOpenSug] = useState(false);
+  const [rxOpen, setRxOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
   const mobWrapRef = useRef<HTMLDivElement>(null);
   const nav = useNavigate();
@@ -141,9 +143,13 @@ export const Header = () => {
           {openSug && search.trim() && <SuggestPanel />}
         </div>
 
-        <Link to="/shop" className="hidden lg:flex items-center gap-2 h-10 px-4 border border-secondary text-secondary rounded-md hover:bg-secondary hover:text-secondary-foreground transition font-semibold text-sm">
+        <button
+          type="button"
+          onClick={() => setRxOpen(true)}
+          className="hidden lg:flex items-center gap-2 h-10 px-4 border border-secondary text-secondary rounded-md hover:bg-secondary hover:text-secondary-foreground transition font-semibold text-sm"
+        >
           <FileText className="w-4 h-4" /> PRESCRIPTION
-        </Link>
+        </button>
 
         <Link to="/wishlist" className="relative p-2 hover:text-primary">
           <Heart className="w-5 h-5" />
@@ -260,9 +266,17 @@ export const Header = () => {
               </Link>
             ))}
             <Link to="/login" onClick={() => setMobileOpen(false)} className="py-2.5 text-sm font-medium border-b border-border">Login / Register</Link>
+            <button
+              type="button"
+              onClick={() => { setMobileOpen(false); setRxOpen(true); }}
+              className="py-2.5 text-sm font-medium text-left flex items-center gap-2 text-secondary"
+            >
+              <FileText className="w-4 h-4" /> Upload Prescription
+            </button>
           </nav>
         </div>
       )}
+      <PrescriptionUploadModal open={rxOpen} onOpenChange={setRxOpen} />
     </header>
   );
 };
