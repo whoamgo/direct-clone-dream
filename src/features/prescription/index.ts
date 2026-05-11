@@ -1,0 +1,1 @@
+export { PrescriptionUploadModal } from "./components/PrescriptionUploadModal";
