@@ -35,7 +35,7 @@ const ProductDetails = () => {
   const buyNow = () => { add(product, qty); nav("/checkout"); };
 
   return (
-    <Layout>
+    <Layout hasStickyCta>
       <div className="container-page py-6">
         <nav className="flex items-center gap-1 text-xs text-muted-foreground mb-4 flex-wrap">
           <Link to="/" className="hover:text-primary"><Home className="w-3.5 h-3.5" /></Link>
@@ -168,10 +168,7 @@ const ProductDetails = () => {
       </div>
       <ProductRow title="Related Products" products={byCategory(product.category).filter((p) => p.id !== product.id).slice(0, 10)} />
 
-      {/* Spacer so the mobile sticky CTA bar doesn't cover the last row */}
-      <div className="h-14 lg:hidden" aria-hidden="true" />
-
-      {/* Mobile sticky Add-to-Cart / Buy Now bar */}
+      {/* Mobile sticky Add-to-Cart / Buy Now bar (bottom spacing handled by Layout's mobile-cta-safe) */}
       <div className="lg:hidden fixed bottom-14 inset-x-0 z-30 bg-background/95 backdrop-blur border-t border-border px-3 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] flex items-center gap-2 shadow-[0_-4px_16px_-8px_hsl(220_15%_15%/0.15)]">
         <div className="flex-shrink-0">
           <p className="text-[10px] text-muted-foreground leading-none">Total</p>
