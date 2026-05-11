@@ -145,4 +145,17 @@
 @layer utilities {
   .scrollbar-hide::-webkit-scrollbar { display: none; }
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  /* Bottom-nav (h-14 = 3.5rem) + iOS safe area. Pages with their own sticky CTA should add `mobile-cta-safe` instead. */
+  .mobile-nav-safe { padding-bottom: calc(3.5rem + env(safe-area-inset-bottom)); }
+  .mobile-cta-safe { padding-bottom: calc(7rem + env(safe-area-inset-bottom)); }
+  @media (min-width: 1024px) {
+    .mobile-nav-safe, .mobile-cta-safe { padding-bottom: 0; }
+  }
+}
+
+/* Lift Sonner toasts above the mobile bottom nav so they never overlap. */
+@media (max-width: 1023px) {
+  [data-sonner-toaster][data-y-position="bottom"] {
+    bottom: calc(3.75rem + env(safe-area-inset-bottom)) !important;
+  }
 }

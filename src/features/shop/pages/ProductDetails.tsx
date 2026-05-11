@@ -35,7 +35,7 @@ const ProductDetails = () => {
   const buyNow = () => { add(product, qty); nav("/checkout"); };
 
   return (
-    <Layout>
+    <Layout hasStickyCta>
       <div className="container-page py-6">
         <nav className="flex items-center gap-1 text-xs text-muted-foreground mb-4 flex-wrap">
           <Link to="/" className="hover:text-primary"><Home className="w-3.5 h-3.5" /></Link>
