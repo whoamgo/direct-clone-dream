@@ -5,8 +5,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { toast } from "sonner";
+import { useSeo } from "@/hooks/useSeo";
 
 const Contact = () => {
+  useSeo("contact");
   const submit = (e: React.FormEvent) => { e.preventDefault(); toast.success("Message sent (demo)"); };
   return (
     <Layout>

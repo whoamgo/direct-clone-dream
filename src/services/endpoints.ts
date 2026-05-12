@@ -1,0 +1,45 @@
+export const ENDPOINTS = {
+  AUTH: {
+    LOGIN: "/auth/login",
+    REGISTER: "/auth/register",
+    LOGOUT: "/auth/logout",
+    REFRESH: "/auth/refresh",
+    FORGOT_PASSWORD: "/auth/forgot-password",
+    RESET_PASSWORD: "/auth/reset-password",
+    VERIFY_EMAIL: "/auth/verify-email",
+    SEND_OTP: "/auth/send-otp",
+    VERIFY_OTP: "/auth/verify-otp",
+    REGISTER_OTP: "/auth/register-otp",
+  },
+  USERS: {
+    LIST: "/users",
+    CREATE: "/users",
+    GET: (id: string) => `/users/${id}`,
+    UPDATE: (id: string) => `/users/${id}`,
+    DELETE: (id: string) => `/users/${id}`,
+    PROFILE: "/users/profile",
+    CHANGE_PASSWORD: "/users/change-password",
+  },
+  PRODUCTS: {
+    LIST: "/products",
+    CREATE: "/products",
+    GET: (id: string) => `/products/${id}`,
+    UPDATE: (id: string) => `/products/${id}`,
+    DELETE: (id: string) => `/products/${id}`,
+  },
+  ORDERS: {
+    LIST: "/orders",
+    CREATE: "/orders",
+    GET: (id: string) => `/orders/${id}`,
+    CANCEL: (id: string) => `/orders/${id}/cancel`,
+  },
+  PRESCRIPTIONS: {
+    UPLOAD: "/prescriptions/upload",
+    LIST: "/prescriptions",
+    GET: (id: string) => `/prescriptions/${id}`,
+  },
+  CART: {
+    SYNC: "/cart/sync",
+    GET: "/cart",
+  },
+} as const;

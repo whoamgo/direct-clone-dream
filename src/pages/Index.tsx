@@ -4,8 +4,11 @@ import { CategoryStrip } from "@/features/shop/components/CategoryStrip";
 import { PromoStrip } from "@/features/shop/components/PromoStrip";
 import { ProductRow } from "@/features/shop/components/ProductRow";
 import { byCategory, bestSellers, newAdditions } from "@/features/shop/data/products";
+import { useSeo } from "@/hooks/useSeo";
 
-const Index = () => (
+const Index = () => {
+  useSeo("home");
+  return (
   <Layout>
     <HeroBanner />
     <CategoryStrip />
@@ -24,6 +27,7 @@ const Index = () => (
     <ProductRow title="Sanitizers & Hand Wash Products" products={byCategory("sanitizers-handwash")} viewAllHref="/category/sanitizers-handwash" />
     <PromoStrip />
   </Layout>
-);
+  );
+};
 
 export default Index;

@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useSeo } from "@/hooks/useSeo";
 
 const faqs = [
   ["Are all medicines genuine?", "Yes — we source directly from authorized distributors and verified manufacturers. Every batch is checked for authenticity and expiry."],
@@ -10,7 +11,9 @@ const faqs = [
   ["Do you offer discounts?", "Yes — we run regular sales of up to 25% off and offer a loyalty program for returning customers."],
 ];
 
-const FAQ = () => (
+const FAQ = () => {
+  useSeo("faq");
+  return (
   <Layout>
     <div className="container-page py-10 max-w-3xl">
       <h1 className="text-3xl sm:text-4xl font-extrabold text-center">Frequently Asked Questions</h1>
@@ -25,5 +28,6 @@ const FAQ = () => (
       </Accordion>
     </div>
   </Layout>
-);
+  );
+};
 export default FAQ;

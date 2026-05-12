@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CheckCircle2, Home, ChevronRight } from "lucide-react";
+import { CircleCheck as CheckCircle2, Chrome as Home, ChevronRight } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { AccountSidebar } from "@/features/account/components/AccountSidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { useSeo } from "@/hooks/useSeo";
 
 const Login = () => {
+  useSeo("login");
   const nav = useNavigate();
   const [phone, setPhone] = useState("");
   const [otpSent, setOtpSent] = useState(false);

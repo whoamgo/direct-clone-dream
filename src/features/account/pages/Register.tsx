@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Home, ChevronRight, Loader2, Phone, ShieldCheck, ArrowLeft } from "lucide-react";
+import { Chrome as Home, ChevronRight, Loader as Loader2, Phone, ShieldCheck, ArrowLeft } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { AccountSidebar } from "@/features/account/components/AccountSidebar";
 import { Button } from "@/components/ui/button";
@@ -10,10 +10,12 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { sendOtp, verifyOtp, resetOtp } from "@/store/slices/otpAuthSlice";
 import { toast } from "sonner";
+import { useSeo } from "@/hooks/useSeo";
 
 const RESEND_SECONDS = 30;
 
 const Register = () => {
+  useSeo("register");
   const nav = useNavigate();
   const dispatch = useAppDispatch();
   const { otpSent, sending, verifying, error } = useAppSelector((s) => s.otpAuth);

@@ -64,6 +64,24 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* ── Spacing & Z-Index Tokens ── */
+    --bottom-nav-height: 3.5rem;
+    --sticky-cta-height: 3.5rem;
+    --safe-area-inset: env(safe-area-inset-bottom);
+    --safe-bottom-space: calc(var(--bottom-nav-height) + var(--safe-area-inset));
+    --toast-offset: calc(var(--bottom-nav-height) + 0.25rem + var(--safe-area-inset));
+
+    /* Z-index scale (never overlap) */
+    --z-base: 1;
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-overlay: 30;
+    --z-modal: 40;
+    --z-popover: 50;
+    --z-toast: 60;
+    --z-tooltip: 70;
+    --z-max: 100;
   }
 
   .dark {
@@ -115,6 +133,22 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Spacing & Z-Index tokens (same in dark mode) */
+    --bottom-nav-height: 3.5rem;
+    --sticky-cta-height: 3.5rem;
+    --safe-area-inset: env(safe-area-inset-bottom);
+    --safe-bottom-space: calc(var(--bottom-nav-height) + var(--safe-area-inset));
+    --toast-offset: calc(var(--bottom-nav-height) + 0.25rem + var(--safe-area-inset));
+    --z-base: 1;
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-overlay: 30;
+    --z-modal: 40;
+    --z-popover: 50;
+    --z-toast: 60;
+    --z-tooltip: 70;
+    --z-max: 100;
   }
 }
 
@@ -145,9 +179,8 @@
 @layer utilities {
   .scrollbar-hide::-webkit-scrollbar { display: none; }
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-  /* Bottom-nav (h-14 = 3.5rem) + iOS safe area. Pages with their own sticky CTA should add `mobile-cta-safe` instead. */
-  .mobile-nav-safe { padding-bottom: calc(3.5rem + env(safe-area-inset-bottom)); }
-  .mobile-cta-safe { padding-bottom: calc(7rem + env(safe-area-inset-bottom)); }
+  .mobile-nav-safe { padding-bottom: var(--safe-bottom-space); }
+  .mobile-cta-safe { padding-bottom: calc(var(--sticky-cta-height) + var(--bottom-nav-height) + var(--safe-area-inset)); }
   @media (min-width: 1024px) {
     .mobile-nav-safe, .mobile-cta-safe { padding-bottom: 0; }
   }
@@ -156,6 +189,6 @@
 /* Lift Sonner toasts above the mobile bottom nav so they never overlap. */
 @media (max-width: 1023px) {
   [data-sonner-toaster][data-y-position="bottom"] {
-    bottom: calc(3.75rem + env(safe-area-inset-bottom)) !important;
+    bottom: var(--toast-offset) !important;
   }
 }

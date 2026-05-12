@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Trash2, Minus, Plus, Home, ChevronRight, Tag, Truck, Gift } from "lucide-react";
+import { Trash2, Minus, Plus, Chrome as Home, ChevronRight, Tag, Truck, Gift } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useCart } from "@/features/cart/context/CartContext";
 import { toast } from "sonner";
+import { useSeo } from "@/hooks/useSeo";
 
 // Demo coupons — in production swap for an API call
 const COUPONS: Record<string, { type: "flat" | "percent"; value: number; label: string }> = {
@@ -20,6 +21,7 @@ const COUNTRIES = ["India", "United States", "United Kingdom", "Canada", "Austra
 const STATES_IN = ["Maharashtra", "Karnataka", "Delhi", "Tamil Nadu", "Gujarat", "Telangana", "West Bengal", "Uttar Pradesh", "Rajasthan", "Kerala"];
 
 const Cart = () => {
+  useSeo("cart");
   const { items, setQty, remove, total, clear } = useCart();
   const [coupon, setCoupon] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; amount: number; label: string } | null>(null);

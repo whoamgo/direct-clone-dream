@@ -1,7 +1,10 @@
 import { Layout } from "@/components/layout/Layout";
 import { Heart, ShieldCheck, Users, Award } from "lucide-react";
+import { useSeo } from "@/hooks/useSeo";
 
-const About = () => (
+const About = () => {
+  useSeo("about");
+  return (
   <Layout>
     <div className="bg-gradient-banner">
       <div className="container-page py-14 text-center">
@@ -32,5 +35,6 @@ const About = () => (
       ))}
     </div>
   </Layout>
-);
+  );
+};
 export default About;

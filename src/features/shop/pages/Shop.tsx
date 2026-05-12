@@ -1,12 +1,14 @@
 import { useMemo, useState } from "react";
 import { useSearchParams, useParams, Link } from "react-router-dom";
-import { Home, ChevronRight, ChevronDown, LayoutGrid, List as ListIcon } from "lucide-react";
+import { Chrome as Home, ChevronRight, ChevronDown, LayoutGrid, List as ListIcon } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { ProductCard } from "@/features/shop/components/ProductCard";
 import { products, categories } from "@/features/shop/data/products";
 import { Button } from "@/components/ui/button";
+import { useSeo } from "@/hooks/useSeo";
 
 const Shop = () => {
+  useSeo("shop");
   const [params] = useSearchParams();
   const { slug } = useParams();
   const q = params.get("q")?.toLowerCase() ?? "";

@@ -1,10 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Search, Heart, ShoppingCart, User } from "lucide-react";
+import { Chrome as Home, Search, Heart, ShoppingCart, User } from "lucide-react";
 import { useCart } from "@/features/cart/context/CartContext";
 
 /**
  * App-like bottom tab bar shown on mobile only.
  * Highlights the active route and shows a live cart badge.
+ * Uses z-index token --z-sticky so it never overlaps modals/toasts.
  */
 const tabs = [
   { to: "/", label: "Home", icon: Home, match: (p: string) => p === "/" },
@@ -20,7 +21,8 @@ export const MobileBottomNav = () => {
   return (
     <nav
       aria-label="Mobile navigation"
-      className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-background/95 backdrop-blur border-t border-border pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_16px_-8px_hsl(220_15%_15%/0.12)]"
+      className="lg:hidden fixed bottom-0 inset-x-0 bg-background/95 backdrop-blur border-t border-border pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_16px_-8px_hsl(220_15%_15%/0.12)]"
+      style={{ zIndex: "var(--z-sticky)" }}
     >
       <ul className="grid grid-cols-5 h-14">
         {tabs.map(({ to, label, icon: Icon, match }) => {

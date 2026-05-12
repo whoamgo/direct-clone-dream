@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Heart, Star, ShieldCheck, Truck, RotateCcw, Minus, Plus, Eye, RefreshCcw, Home, ChevronRight, ImageIcon } from "lucide-react";
+import { Heart, Star, ShieldCheck, Truck, RotateCcw, Minus, Plus, Eye, RefreshCcw, Chrome as Home, ChevronRight, Image as ImageIcon } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,10 +8,16 @@ import { bySlug, byCategory } from "@/features/shop/data/products";
 import { useCart } from "@/features/cart/context/CartContext";
 import { ProductRow } from "@/features/shop/components/ProductRow";
 import { toast } from "sonner";
+import { useSeo } from "@/hooks/useSeo";
 
 const ProductDetails = () => {
   const { slug } = useParams();
   const product = slug ? bySlug(slug) : undefined;
+  useSeo("shop", {
+    title: product ? product.name : "Product",
+    description: product?.desc,
+    ogType: "product",
+  });
   const { add, toggleWish, wishlist } = useCart();
   const [qty, setQty] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
@@ -168,8 +174,11 @@ const ProductDetails = () => {
       </div>
       <ProductRow title="Related Products" products={byCategory(product.category).filter((p) => p.id !== product.id).slice(0, 10)} />
 
-      {/* Mobile sticky Add-to-Cart / Buy Now bar (bottom spacing handled by Layout's mobile-cta-safe) */}
-      <div className="lg:hidden fixed bottom-14 inset-x-0 z-30 bg-background/95 backdrop-blur border-t border-border px-3 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] flex items-center gap-2 shadow-[0_-4px_16px_-8px_hsl(220_15%_15%/0.15)]">
+      {/* Mobile sticky Add-to-Cart / Buy Now bar — sits above bottom nav */}
+      <div
+        className="lg:hidden fixed inset-x-0 bg-background/95 backdrop-blur border-t border-border px-3 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] flex items-center gap-2 shadow-[0_-4px_16px_-8px_hsl(220_15%_15%/0.15)]"
+        style={{ bottom: "var(--bottom-nav-height)", zIndex: "var(--z-sticky)" }}
+      >
         <div className="flex-shrink-0">
           <p className="text-[10px] text-muted-foreground leading-none">Total</p>
           <p className="text-base font-extrabold text-price leading-tight">₹{(product.price * qty).toFixed(2)}</p>
